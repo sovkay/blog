@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/wia",
+      "destination": "https://calendar.app.google/RCPmHy4JqmSYDeGHA",
+      "permanent": false
+    }
+  ]
+}
