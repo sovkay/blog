@@ -1,9 +1,46 @@
 ---
 import { Button } from "@/components/ui/button";
 import Layout from "@/layouts/Layout.astro";
+import { SITE_DESCRIPTION } from "@/consts";
+
+// Person schema on the homepage (Knowledge Panel method, Step 1).
+// `sameAs` is the set of identity links Google cross-references to resolve the entity,
+// including the Wikidata item. `image` is the headshot hosted on Wikimedia Commons.
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://ksorv.com/#person",
+  name: "Saurav Kumar",
+  url: "https://ksorv.com",
+  image: "https://commons.wikimedia.org/wiki/Special:FilePath/Saurav%20kumar.jpg",
+  jobTitle: "Founding Engineer",
+  description: SITE_DESCRIPTION,
+  worksFor: {
+    "@type": "Organization",
+    name: "Morphic",
+    url: "https://morphic.com",
+  },
+  alumniOf: {
+    "@type": "CollegeOrUniversity",
+    name: "Indian Institute of Technology Kanpur",
+    url: "https://iitk.ac.in",
+  },
+  knowsAbout: [
+    "Software Engineering",
+    "Full-stack Development",
+    "Frontend Development",
+    "React",
+  ],
+  sameAs: [
+    "https://www.wikidata.org/wiki/Q140371975",
+    "https://x.com/sovkay",
+    "https://github.com/sovkay",
+    "https://linkedin.com/in/ksorv",
+  ],
+};
 ---
 
-<Layout>
+<Layout jsonLd={personSchema}>
   <div
     class="h-full w-full flex flex-col items-start justify-center gap-4 relative"
   >

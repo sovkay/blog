@@ -5,11 +5,12 @@ interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	jsonLd?: Record<string, unknown>;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
+const { title, description, image = '/blog-placeholder-1.jpg', jsonLd } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -54,3 +55,8 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
     title="Saurav's blog"
     href={new URL("rss.xml", Astro.site)}
 />
+
+<!-- Structured data (JSON-LD) -->
+{jsonLd && (
+	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+)}

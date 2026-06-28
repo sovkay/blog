@@ -8,16 +8,17 @@ import ScriptsHead from "@/components/ScriptsHead.astro";
 interface LayoutProps {
   title?: string;
   description?: string;
+  jsonLd?: Record<string, unknown>;
 }
 
-const { title = SITE_TITLE, description = SITE_DESCRIPTION } =
+const { title = SITE_TITLE, description = SITE_DESCRIPTION, jsonLd } =
   Astro.props as LayoutProps;
 ---
 
 <!doctype html>
 <html lang="en" class="w-full h-full">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} jsonLd={jsonLd} />
     <ScriptsHead />
   </head>
   <body class="bg-background text-foreground antialiased w-full h-full flex flex-col">
