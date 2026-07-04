@@ -60,11 +60,20 @@ macOS reads managed browser policies from `/Library/Managed Preferences/com.brav
   <key>BraveP3AEnabled</key><false/>
   <key>BraveStatsPingEnabled</key><false/>
   <key>MetricsReportingEnabled</key><false/>
+
+  <!-- Uncomment for a truly bare install (these are real browser
+       conveniences, not bloat — only turn them off if you mean it) -->
+  <!--
+  <key>PasswordManagerEnabled</key><false/>
+  <key>AutofillAddressEnabled</key><false/>
+  <key>AutofillCreditCardEnabled</key><false/>
+  <key>TranslateEnabled</key><false/>
+  -->
 </dict>
 </plist>
 ```
 
-I deliberately left the *actual browser* features — password manager, autofill, translate, sync — switched on. Those aren't bloat, they're the browser. If you want a truly bare install, add `PasswordManagerEnabled`, `AutofillAddressEnabled`, `AutofillCreditCardEnabled`, and `TranslateEnabled` as `false`.
+I deliberately left the *actual browser* features — password manager, autofill, translate, sync — switched on. Those aren't bloat, they're the browser. If you want a truly bare install, uncomment the block at the bottom of the file to switch those off too.
 
 ## Installing it
 
