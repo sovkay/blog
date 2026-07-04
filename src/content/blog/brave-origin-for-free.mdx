@@ -1,0 +1,105 @@
+---
+title: "Brave Origin, But Free: Cloning the $59.99 Browser on macOS"
+description: "Brave Origin is a $59.99 paid browser that just strips out crypto, AI, and VPN bloat. Here's how to get the exact same thing for free with one macOS policy file."
+date: 2026-07-04
+heroImage: /images/posts/brave-origin-free.png
+tags:
+  - Brave
+  - Privacy
+  - macOS
+  - Browsers
+featured: true
+---
+
+In June 2026, Brave shipped **Brave Origin** — a paid, stripped-down version of its browser that removes crypto, AI, VPN, News, and every other add-on it has bolted on over the years. Best-in-class privacy, just the browser, nothing else.
+
+The price? **$59.99**, one-time (free on Linux).
+
+Here's the thing: Brave is open source, and Origin doesn't add a single feature. It just turns things *off* by default. Which means you can reproduce it for free in about 30 seconds — no fork, no compiling, no trademark headaches. Here's how.
+
+- - -
+
+## What Origin actually is
+
+Origin is the same Brave engine (Chromium + Brave's Shields ad/tracker blocking) with the monetization layers removed:
+
+- Brave Rewards & Wallet (the crypto stuff)
+- Leo, the built-in AI assistant
+- Brave VPN, News, Talk
+- Sponsored images, telemetry pings
+
+None of that is *new code*. It's the standard browser with a curated set of switches flipped. And on macOS, every one of those switches is exposed as an **enterprise policy** — a plist file the browser reads at launch and enforces, greying out the toggles so they stay off.
+
+That's the whole trick. Origin sells you a set of defaults. We can just... write the defaults.
+
+## The policy file
+
+macOS reads managed browser policies from `/Library/Managed Preferences/com.brave.Browser.plist`. Drop this file there:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- Web3 / crypto -->
+  <key>BraveWalletDisabled</key><true/>
+  <key>BraveRewardsDisabled</key><true/>
+
+  <!-- AI -->
+  <key>BraveAIChatEnabled</key><false/>
+
+  <!-- Extras Origin strips -->
+  <key>BraveVPNDisabled</key><true/>
+  <key>BraveNewsDisabled</key><true/>
+  <key>BraveTalkDisabled</key><true/>
+  <key>TorDisabled</key><true/>
+  <key>BravePlaylistEnabled</key><false/>
+  <key>BraveSpeedreaderEnabled</key><false/>
+  <key>BraveWaybackMachineEnabled</key><false/>
+  <key>BraveWebDiscoveryEnabled</key><false/>
+
+  <!-- Telemetry -->
+  <key>BraveP3AEnabled</key><false/>
+  <key>BraveStatsPingEnabled</key><false/>
+  <key>MetricsReportingEnabled</key><false/>
+</dict>
+</plist>
+```
+
+I deliberately left the *actual browser* features — password manager, autofill, translate, sync — switched on. Those aren't bloat, they're the browser. If you want a truly bare install, add `PasswordManagerEnabled`, `AutofillAddressEnabled`, `AutofillCreditCardEnabled`, and `TranslateEnabled` as `false`.
+
+## Installing it
+
+Save the file somewhere, then:
+
+```bash
+sudo mkdir -p "/Library/Managed Preferences"
+sudo cp com.brave.Browser.plist "/Library/Managed Preferences/com.brave.Browser.plist"
+```
+
+Fully quit Brave (⌘Q — not just the window) and reopen it. Then visit `brave://policy`. Every key should show up as applied, and the matching settings will be locked and greyed out. That's it. That's Origin.
+
+To undo, delete the file and restart:
+
+```bash
+sudo rm "/Library/Managed Preferences/com.brave.Browser.plist"
+```
+
+## The honest limitations
+
+I'm not going to pretend this is byte-for-byte identical. It isn't:
+
+- **It disables, it doesn't delete.** The crypto/AI/VPN code still ships inside the binary — it's just switched off. Zero disk or attack-surface savings. This is the one real thing compiling from source would change, and it's marginal.
+- **Cosmetic leftovers.** A disabled feature occasionally leaves a stray menu item or icon behind. The feature is genuinely off; the UI stub just lingers.
+- **Keys can silently no-op.** If Brave renames a policy key in an update, your entry does nothing — no error. So glance at `brave://policy` after big updates.
+- **The toggles lock for you too.** Managed means managed. To flip one back you edit the plist and restart, not the settings UI. That's the intended trade — same as Origin.
+
+For "make Brave the core browser and nothing else," this nails about 95% of Origin. The missing 5% is dead code on disk and the odd menu stub — cosmetic, not functional.
+
+## So is Origin a rip-off?
+
+Not really — you're paying for curated defaults, a guarantee those features stay gone, and supporting Brave's privacy work. That's a legitimate thing to buy if you value your time and want to back the project.
+
+But if you're the kind of person who'll copy a plist into a folder, you already have everything Origin offers. Sixty dollars is the convenience tax, and the convenience is one file.
+
+Save the file. Keep the sixty bucks.
