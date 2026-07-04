@@ -12,11 +12,12 @@ featured: true
 **TL;DR** — macOS + Linux, one command to read it, one to run it:
 
 ```bash
-curl -fsSL https://ksorv.com/fix-brave.sh | less      # read it first
-curl -fsSL https://ksorv.com/fix-brave.sh | sudo sh   # run it
+curl -fsSL https://ksorv.com/fix-brave.sh | less                 # read it first
+curl -fsSL https://ksorv.com/fix-brave.sh | sudo sh              # run it
+curl -fsSL https://ksorv.com/fix-brave.sh | sudo sh -s -- --undo # revert it
 ```
 
-Add `-s -- --bare` to also disable password manager/autofill, or `--undo` to revert. Rather not run a script? The manual copy-paste version is below.
+Add `-s -- --bare` to also disable password manager/autofill. Rather not run a script? The manual copy-paste version is below.
 
 - - -
 
