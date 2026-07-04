@@ -98,10 +98,11 @@ sudo cp com.brave.Browser.plist "/Library/Managed Preferences/com.brave.Browser.
 
 Fully quit Brave (⌘Q — not just the window) and reopen it. Then visit `brave://policy`. Every key should show up as applied, and the matching settings will be locked and greyed out. That's it. That's Origin.
 
-To undo, delete the file and restart:
+To undo, delete the file and flush macOS's preference cache, then restart Brave:
 
 ```bash
 sudo rm "/Library/Managed Preferences/com.brave.Browser.plist"
+sudo killall cfprefsd   # macOS caches managed prefs; deleting the file alone won't clear them
 ```
 
 ## The honest limitations

@@ -55,6 +55,9 @@ esac
 # --- undo: just delete the file and stop ------------------------------------
 if [ "$UNDO" -eq 1 ]; then
   rm -f "$DEST"
+  # macOS caches managed prefs in cfprefsd — deleting the file isn't enough,
+  # the policies linger (even across restarts) until the cache is flushed.
+  [ "$OS" = mac ] && killall cfprefsd 2>/dev/null || true
   echo "Removed $DEST"
   echo "Quit Brave (Cmd/Ctrl+Q) and reopen to restore stock Brave."
   exit 0
@@ -138,6 +141,9 @@ FOOT
 fi
 
 # --- done -------------------------------------------------------------------
+# Flush macOS's managed-prefs cache so Brave sees the new values on next launch.
+[ "$OS" = mac ] && killall cfprefsd 2>/dev/null || true
+
 echo "Wrote $DEST"
 [ "$BARE" -eq 1 ] && echo "(--bare: password manager, autofill, and translate also disabled)"
 echo "Now fully quit Brave (Cmd/Ctrl+Q) and reopen it, then check brave://policy to confirm."
