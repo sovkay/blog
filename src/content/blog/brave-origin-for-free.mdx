@@ -1,6 +1,6 @@
 ---
 title: "Brave Origin, But Free: Cloning the $59.99 Browser on macOS"
-description: "Brave Origin is a $59.99 paid browser that just strips out crypto, AI, and VPN bloat. Here's how to get the exact same thing for free with one macOS policy file."
+description: "Brave Origin is a $59.99 browser that just strips out crypto, AI, and VPN bloat. Get the same thing free with one macOS policy file."
 date: 2026-07-04
 heroImage: /images/posts/brave-origin-free.png
 tags:
@@ -21,11 +21,11 @@ Add `-s -- --bare` to also disable password manager/autofill. Rather not run a s
 
 - - -
 
-In June 2026, Brave shipped **Brave Origin** — a paid, stripped-down version of its browser that removes crypto, AI, VPN, News, and every other add-on it has bolted on over the years. Best-in-class privacy, just the browser, nothing else.
+In June 2026, Brave shipped **Brave Origin**: a paid version of its browser with the crypto, AI, VPN, News, and the rest of the bolted-on junk taken out. Just the browser.
 
-The price? **$59.99**, one-time (free on Linux).
+It costs **$59.99**, one-time. Free on Linux.
 
-Here's the thing: Brave is open source, and Origin doesn't add a single feature. It just turns things *off* by default. Which means you can reproduce it for free in about 30 seconds — no fork, no compiling, no trademark headaches. Here's how.
+But Brave is open source, and Origin doesn't add anything. It ships the same browser with features turned off. You can do that yourself in about 30 seconds. No fork, no compiling, no trademark mess.
 
 - - -
 
@@ -38,9 +38,9 @@ Origin is the same Brave engine (Chromium + Brave's Shields ad/tracker blocking)
 - Brave VPN, News, Talk
 - Sponsored images, telemetry pings
 
-None of that is *new code*. It's the standard browser with a curated set of switches flipped. And on macOS, every one of those switches is exposed as an **enterprise policy** — a plist file the browser reads at launch and enforces, greying out the toggles so they stay off.
+None of that is *new code*. It's the standard browser with a set of switches flipped. On macOS, every one of those switches is an **enterprise policy**: a plist file the browser reads at launch and enforces, greying out the toggles so they stay off.
 
-That's the whole trick. Origin sells you a set of defaults. We can just... write the defaults.
+Origin sells you a set of defaults. So write the defaults yourself.
 
 ## The policy file
 
@@ -105,21 +105,19 @@ sudo rm "/Library/Managed Preferences/com.brave.Browser.plist"
 sudo killall cfprefsd   # macOS caches managed prefs; deleting the file alone won't clear them
 ```
 
-## The honest limitations
+## Where it falls short
 
-I'm not going to pretend this is byte-for-byte identical. It isn't:
+This isn't byte-for-byte identical to Origin:
 
-- **It disables, it doesn't delete.** The crypto/AI/VPN code still ships inside the binary — it's just switched off. Zero disk or attack-surface savings. This is the one real thing compiling from source would change, and it's marginal.
-- **Cosmetic leftovers.** A disabled feature occasionally leaves a stray menu item or icon behind. The feature is genuinely off; the UI stub just lingers.
-- **Keys can silently no-op.** If Brave renames a policy key in an update, your entry does nothing — no error. So glance at `brave://policy` after big updates.
-- **The toggles lock for you too.** Managed means managed. To flip one back you edit the plist and restart, not the settings UI. That's the intended trade — same as Origin.
+- **It disables, it doesn't delete.** The crypto/AI/VPN code still ships inside the binary, just switched off. No disk or attack-surface savings. This is the one thing compiling from source would actually change, and it barely matters.
+- **Cosmetic leftovers.** A disabled feature sometimes leaves a stray menu item or icon behind. The feature is off; the UI stub lingers.
+- **Keys can silently no-op.** If Brave renames a policy key in an update, your entry does nothing and throws no error. Check `brave://policy` after big updates.
+- **The toggles lock for you too.** Managed means managed. To flip one back you edit the plist and restart, not the settings UI. Same as Origin.
 
-For "make Brave the core browser and nothing else," this nails about 95% of Origin. The missing 5% is dead code on disk and the odd menu stub — cosmetic, not functional.
+For a browser and nothing else, this gets you 95% of Origin. The missing 5% is dead code on disk and the odd menu stub. Cosmetic, not functional.
 
-## So is Origin a rip-off?
+## Is it worth paying?
 
-Not really — you're paying for curated defaults, a guarantee those features stay gone, and supporting Brave's privacy work. That's a legitimate thing to buy if you value your time and want to back the project.
+Sixty dollars buys you defaults someone else picked, a promise those features stay gone, and a way to support Brave. Reasonable if your time is worth more than the setup.
 
-But if you're the kind of person who'll copy a plist into a folder, you already have everything Origin offers. Sixty dollars is the convenience tax, and the convenience is one file.
-
-Save the file. Keep the sixty bucks.
+But if you'll paste a file into a folder, you already have what Origin sells. Save the file. Keep the money.
