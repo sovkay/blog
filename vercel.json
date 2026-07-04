@@ -5,5 +5,13 @@
       "destination": "https://calendar.app.google/RCPmHy4JqmSYDeGHA",
       "permanent": false
     }
+  ],
+  "headers": [
+    {
+      "source": "/fix-brave.sh",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+      ]
+    }
   ]
 }
